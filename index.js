@@ -22,16 +22,34 @@ io.on("connection", (socket) => {
     socket.username = username;
     socket.room = room;
 
-    if (!rooms[room]) rooms[room] = [];
+    if (!rooms[room]) rooms[room] = [socket]];
     if (rooms[room].length >= 5) return;
 
     rooms[room].push(socket);
-    socket.join(room);
+   socket.on("joinRoom", ({ room, username }) => {
+  socket.username = username;
+  socket.room = room;
 
-    io.emit("roomList", getRoomList());
+  if (!rooms[room]) rooms[room] = [];
 
-    if (rooms[room].length >= 4) {
-      startGame(room);
+  if (rooms[room].length >= 5) return;
+
+  rooms[room].push({ socket, username });
+  socket.join(room);
+
+  // Wyślij listę graczy w tym pokoju do wszystkich jego uczestników
+  const players = rooms[room].map(p => p.username);
+  rooms[room].forEach(({ socket }) => {
+    socket.emit("playerList", players);
+  });
+
+  io.emit("roomList", getRoomList());
+
+  if (rooms[room].length >= 4) {
+    startGame(room);
+  }
+});
+
     }
   });
 
@@ -53,8 +71,20 @@ function getRoomList() {
 }
 
 function startGame(room) {
-  function startGame(room) {
-  const players = rooms[room];
+  const playerEntries = rooms[room]; // [{ socket, username }, ...]
+
+  // Losuj wspólne słowo
+  const commonWord = WORDS[Math.floor(Math.random() * WORDS.length)];
+
+  // Losuj indeks impostora
+  const impostorIndex = Math.floor(Math.random() * playerEntries.length);
+
+  playerEntries.forEach(({ socket }, i) => {
+    const wordToSend = i === impostorIndex ? "IMPOSTOR" : commonWord;
+    socket.emit("gameStart", { word: wordToSend });
+  });
+}
+
 
   // Losuj wspólne słowo
   const wordIndex = Math.floor(Math.random() * WORDS.length);
