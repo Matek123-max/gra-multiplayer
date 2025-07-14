@@ -7,12 +7,17 @@ app.use(express.static("public"));
 
 const rooms = {};
 const WORDS = [
-  "telefon", "pies", "las", "książka", "samochód", "komputer", "rower", "szkoła",
-  "banan", "zegar", "butelka", "pilot", "herbata", "biurko", "okno", "kaktus",
-  "piłka", "cukier", "lampa", "talerz", "samolot", "ogród", "dywan", "żaba",
-  "plecak", "gra", "lód", "kosz", "deszcz", "kalendarz", "słońce", "kuchnia", 
-  // ... dodaj do 300 słów
+ const WORDS = [
+  "telefon", "komputer", "samochód", "pies", "kot", "kwiat", "słońce", "księżyc", "gwiazda", "las",
+  "rzeka", "góra", "morze", "drzwi", "okno", "krzesło", "biurko", "kubek", "książka", "długopis",
+  "notatnik", "tablica", "farba", "rower", "samolot", "pociąg", "czapka", "but", "skarpetka", "zegar",
+  "lampa", "przycisk", "papier", "nożyczki", "kamera", "mikrofon", "lód", "chleb", "woda", "herbata",
+  "kawa", "czekolada", "ser", "masło", "jajko", "mleko", "sok", "truskawka", "banan", "gruszka",
+  // ... i tak dalej do 300 słów
 ];
+
+  // ... dodaj do 300 słów
+
 
 
 io.on("connection", (socket) => {
