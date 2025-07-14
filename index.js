@@ -6,7 +6,14 @@ const io = require("socket.io")(http);
 app.use(express.static("public"));
 
 const rooms = {};
-const WORDS = ["komputer", "telefon", "las", "pizza", "rower"];
+const WORDS = [
+  "telefon", "pies", "las", "książka", "samochód", "komputer", "rower", "szkoła",
+  "banan", "zegar", "butelka", "pilot", "herbata", "biurko", "okno", "kaktus",
+  "piłka", "cukier", "lampa", "talerz", "samolot", "ogród", "dywan", "żaba",
+  "plecak", "gra", "lód", "kosz", "deszcz", "kalendarz", "słońce", "kuchnia", 
+  // ... dodaj do 300 słów
+];
+
 
 io.on("connection", (socket) => {
   console.log("Nowy gracz:", socket.id);
