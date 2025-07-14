@@ -46,9 +46,28 @@ function getRoomList() {
 }
 
 function startGame(room) {
-  rooms[room].forEach((socket) => {
-    const word = WORDS[Math.floor(Math.random() * WORDS.length)];
-    socket.emit("gameStart", { word });
+  function startGame(room) {
+  const players = rooms[room];
+
+  // Losuj wspólne słowo
+  const wordIndex = Math.floor(Math.random() * WORDS.length);
+  const commonWord = WORDS[wordIndex];
+
+  // Losuj inne słowo dla impostora
+  let impostorWord;
+  do {
+    impostorWord = WORDS[Math.floor(Math.random() * WORDS.length)];
+  } while (impostorWord === commonWord);
+
+  // Losuj, który gracz będzie impostorem
+  const impostorIndex = Math.floor(Math.random() * players.length);
+
+  players.forEach((socket, i) => {
+    const wordToSend = (i === impostorIndex) ? impostorWord : commonWord;
+    socket.emit("gameStart", { word: wordToSend });
+  });
+}
+
   });
 }
 
