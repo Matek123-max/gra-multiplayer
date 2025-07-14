@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gra Karciana</title>
+  </head>
+  <body>
+    <h1>Gra karciana</h1>
+    <input id="username" placeholder="Twoje imię" />
+    <input id="room" placeholder="Nazwa pokoju" />
+    <button onclick="joinRoom()">Dołącz</button>
+
+    <h2>Pokoje:</h2>
+    <ul id="roomList"></ul>
+
+    <div id="game" style="display: none;">
+      <h3>Gra się zaczęła!</h3>
+      <p>Twoje słowo: <span id="word"></span></p>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+  </body>
+</html>
