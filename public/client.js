@@ -22,12 +22,13 @@ socket.on("gameStart", ({ word }) => {
   document.getElementById("game").style.display = "block";
   document.getElementById("word").textContent = word;
 });
+
 socket.on("playerList", (players) => {
-  const list = document.createElement("ul");
+  const list = document.getElementById("playerList");
+  list.innerHTML = "";
   players.forEach(name => {
     const li = document.createElement("li");
     li.textContent = name;
     list.appendChild(li);
   });
-  document.body.appendChild(list); // albo dodaj w konkretnym miejscu
 });
